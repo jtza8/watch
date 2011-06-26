@@ -8,7 +8,9 @@
   ((time-marker :initform nil)
    (run-time :initform 0)
    (running :initform nil :reader running-p)
-   (parent :initform nil :reader parent)
+   (parent :initform nil
+           :initarg :parent
+           :reader parent)
    (time-func :initform nil)))
 
 (defmethod initialize-instance :after ((watch watch) &key)
