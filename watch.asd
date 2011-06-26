@@ -5,6 +5,10 @@
 #-(or unix win32)
 (error "Your platform is not supported.")
 
+#+(and unix (not darwin))
+(eval-when (:load-toplevel :execute)
+  (asdf:operate 'asdf:load-op 'cffi-grovel))
+
 (asdf:defsystem "watch"
   :author "Jens Thiede"
   :license "BSD-style"

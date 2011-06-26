@@ -5,7 +5,7 @@
 (asdf:defsystem "watch-tests"
   :author "Jens Thiede"
   :license "BSD-style"
-  :depends-on ("xlunit")
+  :depends-on ("watch" "xlunit")
   :serial t
   :components ((:file "package")
                (:file "watch-test")))
