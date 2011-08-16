@@ -20,6 +20,8 @@
               #'get-time
               (lambda () (lap parent))))))
 
+(declaim (inline start stop lap reset))
+
 (defmethod start ((watch watch))
   (with-slots (time-marker time-func run-time running) watch
     (if running
@@ -35,11 +37,16 @@
                t)
         nil)))
 
-(defmethod lap ((watch watch))
+(defmethod lap ((watch watch) &optional (resolution :nanosec))
   (with-slots (time-marker time-func running run-time) watch
-    (if running
-        (- (funcall time-func) time-marker)
-        run-time)))
+    (/ (if running
+           (- (funcall time-func) time-marker)
+           run-time)
+       (ecase resolution
+         (:nanosec 1)
+         (:microsec 1000.0d0)
+         (:millisec 1000000.0d0)
+         (:sec 1000000000.0d0)))))
 
 (defmethod reset ((watch watch) &optional (auto-start nil))
   (with-slots (time-marker running run-time) watch
